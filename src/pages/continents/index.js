@@ -1,19 +1,19 @@
-import {data} from "../../util"
-import {useNavigate} from "react-router-dom"
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { data } from '../../util';
+
 export default function ContinentsPage() {
-    const {continents}= data;
-    console.log(continents);
-    const navigate = useNavigate()
   return (
     <div>
-        {
-            continents.map((i)=>{
-                return <span 
-                key={i.id}
-                onClick={()=>navigate(`/country/${i.id}`)}
-                >{i.name}</span>
-            })
-        }
+      <h1>Continents</h1>
+      {data.continents.map((continent) => (
+        <div key={continent.id}>
+          <Link to={`/countries/${continent.id}`}>
+            <img src={continent.image} alt={continent.name} />
+            <h2>{continent.name}</h2>
+          </Link>
+        </div>
+      ))}
     </div>
-  )
+  );
 }

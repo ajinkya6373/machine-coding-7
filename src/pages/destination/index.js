@@ -1,22 +1,28 @@
-import React from 'react'
-import {useParams,useNavigate} from "react-router-dom"
+import React from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { data } from '../../util';
 
 export default function DestinationsPage() {
-    const {cId,dId}  = useParams()
-    const {continents}= data;
-    const continent = continents.filter((i)=>i.id.toString()===cId)
-    // console.log(continent[0].countries);
-    console.log(dId);
-    const country = continent[0].countries.filter((i)=>i.id.toString()===dId) 
-    console.log(country);
+  const { countryId } = useParams();
+  const country = data.continents
+    .flatMap((continent) => continent.countries)
+    .find((country) => country.id === parseInt(countryId));
+
+  if (!country) {
+    return <div>Country not found</div>;
+  }
+
   return (
     <div>
-    {
-        country[0]?.destinations?.map((i)=>{
-            return <span key={i.id}>{i.name}</span>
-        })
-    }
+      <h1>Destinations in {country.name}</h1>
+      {country.destinations.map((destination) => (
+        <div key={destination.id}>
+          <Link to={`/destination/${destination.id}`} target="_blank">
+            <img src={destination.image} alt={destination.name} />
+            <h2>{destination.name}</h2>
+          </Link>
+        </div>
+      ))}
     </div>
-  )
+  );
 }
