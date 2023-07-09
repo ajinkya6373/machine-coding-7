@@ -3,20 +3,21 @@ import { useParams } from 'react-router-dom';
 import { data } from '../../util';
 
 export default function DestinationDetailPage() {
-  const { destinationId } = useParams();
-  const destination = data.continents
-    .flatMap((continent) => continent.countries)
-    .flatMap((country) => country.destinations)
-    .find((destination) => destination.id === parseInt(destinationId));
+  const { continentId,countryId,destinationId, } = useParams();
 
+  const continent = data.continents.find((i)=>i.id.toString()===continentId)
+  const country  = continent.countries.find((i)=>i.id.toString()===countryId);
+  console.log(country);
+  const destination = country?.destinations.find((i)=>i.id.toString()===destinationId)
+    console.log(destination);
   if (!destination) {
     return <div>Destination not found</div>;
   }
 
   return (
     <div>
-      <h1>{destination.name}</h1>
-      <img src={destination.image} alt={destination.name} />
+      <h1>{destination?.name}</h1>
+      <img src={destination?.image} alt={destination?.name} />
       <p>{destination.description}</p>
       <p>Ratings: {destination.ratings}</p>
       <p>Reviews: {destination.reviews}</p>
