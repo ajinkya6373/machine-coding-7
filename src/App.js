@@ -1,15 +1,28 @@
-
 import { Routes, Route } from "react-router-dom";
-import { ContinentsPage, CountriesPage, DestinationsDetailPage, DestinationsPage } from "./pages";
+import {
+  ContinentsPage,
+  CountriesPage,
+  DestinationDetailPage,
+  DestinationsPage,
+} from "./pages";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<ContinentsPage />} />
-        <Route path="/country/:cId" element={<CountriesPage />} />
-        <Route path="/destination/:cId/:dId" element={<DestinationsPage />} />
-        <Route path="/detail" element={<DestinationsDetailPage />} />
+        <Route exact path="/" element={<ContinentsPage/>} />
+        <Route exact path="/continents" element={<ContinentsPage/>} />
+        <Route exact path="/countries/:continentId" component={<CountriesPage/>} />
+        <Route
+          exact
+          path="/destinations/:countryId"
+          component={<DestinationsPage/>}
+        />
+        <Route
+          exact
+          path="/destination/:destinationId"
+          component={<DestinationDetailPage/>}
+        />
       </Routes>
     </div>
   );
